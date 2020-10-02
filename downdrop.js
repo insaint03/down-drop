@@ -60,12 +60,11 @@
                 }
             }
             
-            
-
-            let rets = rss.reduce(async (gs, order)=>{
+            let rets = [];
+            for(let i=0; i<rss.length; i++) {
                 let details = await promised_get(`${endpoint}/${order.orderNo}`, { __ts: Date.now() });
                 let detailInfo = JSON.parse(details.currentTarget.responseText).data;
-                return gs.concat(detailInfo.items.map((item)=>[
+                rets = rets.concat(detailInfo.items.map((item)=>[
                     // 구분
                     order.serviceType,
                     // 주문번호
@@ -85,7 +84,7 @@
                     // 주문총액
                     order.orderAmount,
                 ]));
-            }, []);
+            }
             window.console.log(rets);
             return rets;
         },
