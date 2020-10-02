@@ -10,7 +10,7 @@
         });
     };
 
-    let filedownload = () => {
+    let filedownload = (filename, contents) => {
 
     };
 
@@ -42,7 +42,7 @@
 
             while((ts_cursor+interval) <= ts_threshold) {
                 let date_starts = (new Date(ts_cursor)).toISOString().split('T')[0];
-                let date_ends = (new Date(ts_cursor + interval)).toISOString().split('T')[0];
+                let date_ends = (new Date(Math.min(ts_threshold, ts_cursor + interval))).toISOString().split('T')[0];
                 let resp = await promised_get(`${endpoint}`, Object.assign(params, {
                     __ts: Date.now(),
                     startDate: date_starts,
@@ -62,7 +62,7 @@
             
             
 
-            return rss.reduce((gs, order)=>{
+            let rets = rss.reduce((gs, order)=>{
                 return gs.concat(order.items.map((item)=>[
                     // 구분
                     order.serviceType,
@@ -82,6 +82,8 @@
                     order.status,
                 ]));
             }, []);
+            window.console.log(rets);
+            return rets;
         },
 
         'coupeats': (opts) => {
