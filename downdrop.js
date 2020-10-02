@@ -128,6 +128,7 @@
                 let page = 0;
                 do {
                     let resp = await order_list(store.id, opts.start_date, opts.end_date, page);
+                    window.console.log(resp);
                     rs = rs.concat(resp.content.reduce((row, order)=> {
                         let items = order.items;
                         if(order.canceledItems) {
