@@ -117,7 +117,7 @@
 
             // load store list first
             let stores = await store_list();
-            stores.filter((store) => 
+            stores = stores.filter((store) => 
                 opts.branches.reduce((filtered, branch) => {
                     return filtered || store.name.replace(/\w/g, '').includes(branch);
                 }, false));
@@ -125,6 +125,7 @@
             let rets = [];
             for(let i=0; i<stores.length; i++) {
                 let store = stores[i];
+                window.console.log('run store', store.id, store.name);
                 let rs = [];
                 let totals = 0;
                 let page = 0;
