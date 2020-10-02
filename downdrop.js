@@ -100,7 +100,7 @@
             });
             let order_list = (store_id, date_start, date_ends, page)=> new Promise((rs, rj) => {
                 $.ajax({method: 'POST', url: `${endpoint}/order/condition`, dataType: 'json',
-                    data: JSON.parse({
+                    data: JSON.stringify({
                         storeId: store_id,
                         startDate: new Date(`${date_start}T00:00:00`).getTime(),
                         endDate: new Date(`${date_ends}T00:00:00`).getTime()-1,
