@@ -119,7 +119,8 @@
                 }, false));
 
             let rets = [];
-            stores.forEach((store) => {
+            for(let i=0; i<stores.length; i++) {
+                let store = stores[i];
                 let rs = [];
                 let totals = 0;
                 let page = 0;
@@ -146,7 +147,7 @@
                     totals = resp.totalElements;
                 } while(rs.length < totals);
                 rets = rets.concat(rs);
-            });
+            }
 
             window.console.log(rets);
             return rets;
