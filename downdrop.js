@@ -10,8 +10,13 @@
         });
     };
 
-    let filedownload = (filename, contents) => {
-
+    let filedownload = (opts, contents, columns) => {
+        let alink = Object.assign(document.createElement('a'), {
+            href: `data:text/plain;charset=utf-8,${[columns].concat(contents).map((row)=>row.join('\t')).join('\n')}`,
+            download: `${location.hostname}_${opts.start_date}-${opts.end_date}.${(new Date()).toISOString()}.txt`,
+        });
+        document.body.appendChild(alink).click();
+        alink.addEventListener('click', ()=>{ document.removeChild(alink); });
     };
 
     let conditional_worker = {
@@ -62,27 +67,19 @@
                 let details = await promised_get(`${endpoint}/${order.orderNo}`, { __ts: Date.now() });
                 let detailInfo = JSON.parse(details.currentTarget.responseText).data;
                 rets = rets.concat(detailInfo.items.map((item)=>[
-                    // 구분
                     order.serviceType,
-                    // 주문번호
                     order.orderNo,
-                    // 날짜/시각
                     order.orderDatetime,
-                    // 점포
                     order.shop.name,
-                    // 상품
                     item.name,
-                    // 수량
                     item.quantity,
-                    // 단가
                     item.price,
-                    // 할인
                     item.discount,
-                    // 주문총액
                     order.orderAmount,
                 ]));
             }
             window.console.log(rets);
+            filedownload(opts, rets, ['구분','주문번호','주문시각','점포명','상품명','수량','단가','할인','주문총액'])
             return rets;
         },
 
@@ -152,6 +149,7 @@
             }
 
             window.console.log(rets);
+            filedownload(opts, rets, ['구분','주문번호','주문시각','점포명','상품명','수량','단가','할인','주문총액'])
             return rets;
         },
 
@@ -209,6 +207,8 @@
                 ]));
             }
             window.console.log(rets);
+
+            filedownload(opts, rets, ['구분','점포명','분류','메뉴 이름','옵션 이름','개수','합산 금액']);
             return rets;
         },
     }
