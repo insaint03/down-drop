@@ -38,7 +38,7 @@
             let ts_cursor = new Date(opts.start_date).getTime();
             let ts_threshold = new Date(opts.end_date).getTime();
             let rss = [];
-            while((ts_cursor+interval) < ts_threshold) {
+            while((ts_cursor+interval) <= ts_threshold) {
                 let rs = [];
                 let date_starts = (new Date(ts_cursor)).toISOString().split('T')[0];
                 let date_ends = (new Date(ts_cursor + interval)).toISOString().split('T')[0];
@@ -48,7 +48,8 @@
                     endDate: date_ends,
                     offset: rs.length,
                 })).then((resp)=>{
-                    let data = JSON.parse(resp.currentTarget.responsText).data;
+                    let data = JSON.parse(resp.currentTarget.responseText).data;
+                    window.console.log(date_starts, rs.length, data);
                     rs = rs.concat(data.histories);
                     if(rs.length>=data.totalCount) {
                         ts_cursor += interval;
