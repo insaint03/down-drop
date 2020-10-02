@@ -192,19 +192,27 @@
                 let store = stores[i];
                 window.console.log('run store', store.id, store.name);
                 let rss = await order_list(store.id, opts.start_date, opts.end_date);
-                rets = rets.concat(rss
-                    .filter((row)=>0<(row[0]+row[1]+row[2]+row[4]).length)
-                    .map((row)=>[
-                    //구분
-                    'Unospay',
-                    store.name,
-                    // 
-                    row[4],
-                    row[0],
-                    row[1],
-                    row[2],
-                    row[3],
-                ]));
+                let category = '';
+                let menu = '';
+
+                rss.forEach((row)=>{
+                    if((row[0]+row[1]+row[2]+row[4]).length<=0) return;
+
+                    category = row[4] || category;
+                    menu = row[0] || menu;
+                    option = row[1]
+                    qty = row[2];
+                    sum = row[3];
+                    rets.push([
+                        'Unospay',
+                        store.name,
+                        category,
+                        menu,
+                        option,
+                        qty,
+                        sum,
+                    ]);
+                });
             }
             window.console.log(rets);
 
