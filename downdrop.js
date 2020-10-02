@@ -10,7 +10,9 @@
         });
     };
 
-    let filedownload = ()
+    let filedownload = () => {
+
+    };
 
     let conditional_worker = {
         // 
@@ -46,9 +48,9 @@
                     endDate: date_ends,
                     offset: rs.length,
                 })).then((resp)=>{
-                    // resp = JSON.parse(resp);
-                    rs = rs.concat(resp.data.histories);
-                    if(rs.length>=resp.data.totalCount) {
+                    let data = JSON.parse(resp.currentTarget.responsText).data;
+                    rs = rs.concat(data.histories);
+                    if(rs.length>=data.totalCount) {
                         ts_cursor += interval;
                         rss = rss.concat(rs);
                         rs = [];
