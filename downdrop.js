@@ -100,6 +100,7 @@
             });
             let order_list = (store_id, date_start, date_ends, page)=> new Promise((rs, rj) => {
                 $.ajax({method: 'POST', url: `${endpoint}/order/condition`, dataType: 'json',
+                    headers: {'content-type': 'application/json;charset=UTF-8'},
                     data: JSON.stringify({
                         storeId: store_id,
                         startDate: new Date(`${date_start}T00:00:00`).getTime(),
@@ -108,7 +109,8 @@
                         pageSize: 50,
                         success: (resp) => { rs(resp.data) },
                         error: rj,
-                    })});
+                    })
+                });
             });
 
             // load store list first
