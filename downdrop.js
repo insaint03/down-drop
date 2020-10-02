@@ -38,10 +38,9 @@
             let ts_cursor = new Date(opts.start_date).getTime();
             let ts_threshold = new Date(opts.end_date).getTime();
             let rss = [];
-            let complete = false;
+            let rs = [];
 
             while((ts_cursor+interval) <= ts_threshold) {
-                let rs = [];
                 let date_starts = (new Date(ts_cursor)).toISOString().split('T')[0];
                 let date_ends = (new Date(ts_cursor + interval)).toISOString().split('T')[0];
                 let resp = await promised_get(`${endpoint}`, Object.assign(params, {
