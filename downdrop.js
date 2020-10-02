@@ -63,7 +63,7 @@
             
 
             let rets = rss.reduce(async (gs, order)=>{
-                let details = await promised_get(`${endpoint}/${order.orderNo}`. { __ts: Date.now() });
+                let details = await promised_get(`${endpoint}/${order.orderNo}`, { __ts: Date.now() });
                 let detailInfo = JSON.parse(details.currentTarget.responseText).data;
                 return gs.concat(detailInfo.items.map((item)=>[
                     // 구분
