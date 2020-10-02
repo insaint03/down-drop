@@ -147,6 +147,7 @@
                         ]));
                     }, []));
                     totals = resp.totalElements;
+                    page += 1;
                 } while(rs.length < totals);
                 rets = rets.concat(rs);
             }
