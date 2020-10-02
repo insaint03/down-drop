@@ -109,9 +109,8 @@
                         endDate: new Date(`${date_ends}T00:00:00`).getTime()-1,
                         pageNumber: page || 0,
                         pageSize: 50,
-                        error: rj,
                     }),
-                    success: (resp) => { window.console.log(resp); rs(resp.data); },
+                    success: (resp) => { rs(resp.orderPageVo); },
                     error: rj,
                 });
             })}
@@ -131,7 +130,6 @@
                 let page = 0;
                 do {
                     let resp = await order_list(store.id, opts.start_date, opts.end_date, page);
-                    window.console.log(resp);
                     rs = rs.concat(resp.content.reduce((row, order)=> {
                         let items = order.items;
                         if(order.canceledItems) {
