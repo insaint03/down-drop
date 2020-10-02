@@ -62,8 +62,10 @@
             
             
 
-            let rets = rss.reduce((gs, order)=>{
-                return gs.concat(order.items.map((item)=>[
+            let rets = rss.reduce(async (gs, order)=>{
+                let details = await promised_get(`${endpoint}/${order.orderNo}`. { __ts: Date.now() });
+                let detailInfo = JSON.parse(details.currentTarget.responseText).data;
+                return gs.concat(detailInfo.items.map((item)=>[
                     // 구분
                     order.serviceType,
                     // 주문번호
@@ -76,10 +78,12 @@
                     item.name,
                     // 수량
                     item.quantity,
+                    // 단가
+                    item.price,
+                    // 할인
+                    item.discount,
                     // 주문총액
                     order.orderAmount,
-                    // 주문 결과
-                    order.status,
                 ]));
             }, []);
             window.console.log(rets);
