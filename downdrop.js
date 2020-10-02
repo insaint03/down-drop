@@ -92,13 +92,15 @@
 
         'store.coupangeats.com': async (opts) => {
             const endpoint = '/api/v1/merchant/web';
-            let store_list = ()=> new Promise((rs,rj) => {
+            let store_list = ()=> {
+                return new Promise((rs,rj) => {
                 $.ajax({method: 'GET', url: `${endpoint}/stores`, dataType: 'json',  
                     success: (resp) => { rs(resp.data); },
                     error: rj,
                 });
-            });
-            let order_list = (store_id, date_start, date_ends, page)=> new Promise((rs, rj) => {
+            })};
+            let order_list = (store_id, date_start, date_ends, page)=> {
+                return new Promise((rs, rj) => {
                 $.ajax({method: 'POST', url: `${endpoint}/order/condition`, dataType: 'json',
                     headers: {'content-type': 'application/json;charset=UTF-8'},
                     data: JSON.stringify({
@@ -107,11 +109,12 @@
                         endDate: new Date(`${date_ends}T00:00:00`).getTime()-1,
                         pageNumber: page || 0,
                         pageSize: 50,
-                        success: (resp) => { rs(resp.data) },
                         error: rj,
-                    })
+                    }),
+                    success: (resp) => { window.console.log(resp); rs(resp.data); },
+                    error: rj,
                 });
-            });
+            })}
 
             // load store list first
             let stores = await store_list();
