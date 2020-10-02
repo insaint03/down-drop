@@ -18,7 +18,7 @@
         },
     }
 
-    window.__downdrop = (options)=>{
+    window.__downdrop = function(options) {
         Object
             .keys(conditional_worker)
             .forEach((hostkey)=>{
@@ -28,4 +28,4 @@
                 }
             });
     };
-});
+})();
