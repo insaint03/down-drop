@@ -20,7 +20,7 @@
         // 
         'ceo.baemin.com': async (opts) => {
             const endpoint = '/v1/orders';
-            const interval = 3600*24*1e3 * 7;
+            const interval = 3600*24*1e3 * 6;
             const params = {
                 sort: 'ORDER_DATETIME',
                 shopNo: '',
@@ -30,7 +30,7 @@
                 startDate: opts.start_date,
                 endDate: opts.end_date,
                 offset: 0,
-                limit: 100,
+                limit: 50,
             };
 
             let ts_cursor = new Date(opts.start_date).getTime();
@@ -46,7 +46,7 @@
                     endDate: date_ends,
                     offset: rs.length,
                 })).then((resp)=>{
-                    resp = JSON.parse(resp);
+                    // resp = JSON.parse(resp);
                     rs = rs.concat(resp.data.histories);
                     if(rs.length>=resp.data.totalCount) {
                         ts_cursor += interval;
