@@ -195,7 +195,7 @@
                 window.console.log('run store', store.id, store.name);
                 let rss = await order_list(store.id, opts.start_date, opts.end_date);
                 window.console.log(rss);
-                rets.concat(rss
+                rets = rets.concat(rss
                     .filter((row)=>0<(row[0]+row[1]+row[2]+row[4]).length)
                     .map((row)=>[
                     //구분
