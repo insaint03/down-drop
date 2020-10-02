@@ -1,6 +1,10 @@
 (()=> {
     let conditional_worker = {
         // 
+        'mozilla': (opts) => {
+            return opts;
+        },
+        // 
         'baemins': (opts)=>{
             return opts;
         },
