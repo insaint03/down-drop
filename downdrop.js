@@ -170,8 +170,8 @@
             });
             let order_list = (store_id, date_start, date_ends) => {
                 return new Promise((rs, rj) => {
-                    let ds = new Date(date_start).split(/[^\d]/);
-                    let de = new Date(date_ends).split(/[^\d]/);
+                    let ds = date_start.split(/[^\d]/);
+                    let de = date_ends.split(/[^\d]/);
 
                     $.ajax({ method: 'POST', url: endpoint, dataType: 'json',
                         data: JSON.stringify({
