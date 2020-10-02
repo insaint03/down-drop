@@ -174,7 +174,7 @@
                     let de = date_ends.split(/[^\d]/);
 
                     $.ajax({ method: 'POST', url: endpoint, dataType: 'json',
-                        data: JSON.stringify({
+                        data: $.param({
                             start_year: ds[0],
                             start_month: ds[1],
                             start_date: ds[2],
