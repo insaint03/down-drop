@@ -62,6 +62,7 @@
             
             let rets = [];
             for(let i=0; i<rss.length; i++) {
+                let order = rss[i];
                 let details = await promised_get(`${endpoint}/${order.orderNo}`, { __ts: Date.now() });
                 let detailInfo = JSON.parse(details.currentTarget.responseText).data;
                 rets = rets.concat(detailInfo.items.map((item)=>[
