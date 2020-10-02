@@ -16,10 +16,6 @@
 
     let conditional_worker = {
         // 
-        'mozilla': (opts) => {
-            return opts;
-        },
-        // 
         'ceo.baemin.com': async (opts) => {
             const endpoint = '/v1/orders';
             const interval = 3600*24*1e3 * 6;
@@ -159,8 +155,59 @@
             return rets;
         },
 
-        'unos': (opts) => {
-            return opts;
+        'unospay.com': async (opts) => {
+            const endpoint = '/php/db_query_menu.php';
+            let stores = [];
+            document.querySelectorAll('select#affiliate_id option[value]').forEach((store, si) => {
+                if(si<=0) return;
+                let store_id = store.value;
+                let store_name = store.textContent.trim();
+                if(opts.branches.reduce((filter, branch)=> {
+                    return filter || store_name.replace(/\w/g, '').includes(branch);
+                }, false)) {
+                    stores.push({id: store_id, name: store_name });
+                }
+            });
+            let order_list = (store_id, date_start, date_ends) => {
+                return new Promise((rs, rj) => {
+                    let ds = new Date(date_start).split(/[^\d]/);
+                    let de = new Date(date_ends).split(/[^\d]/);
+
+                    $.ajax({ method: 'POST', url: endpoint, dataType: 'json',
+                        data: JSON.stringify({
+                            start_year: ds[0],
+                            start_month: ds[1],
+                            start_date: ds[2],
+                            end_year: de[0],
+                            end_month: de[1],
+                            end_date: de[2],
+                            affiliate_id: store_id,
+                        }),
+                        success: (resp) => { rs(resp); },
+                        error: rj,
+                    })
+                })
+            }
+
+            let rets = [];
+            for(let i=0; i<stores.length; i++) {
+                let store = stores[i];
+                window.console.log('run store', store.id, store.name);
+                let rss = await order_list(store.id, opts.start_date, opts.end_date);
+                rets.concat(rss
+                    .filter((row)=>0<(row[0]+row[1]+row[2]+row[4]).length)
+                    .map((row)=>[
+                    //구분
+                    'Unospay',
+                    // 
+                    row[4],
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                ]))
+            }
+            window.console.log(rets);
         },
     }
 
