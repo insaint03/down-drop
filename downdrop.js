@@ -85,10 +85,10 @@
           });
           // console log
           if((i+1)%20==0) {
-            window.console.log(`${i}/${rss.length} done, `, order);
+            window.console.log(`${i+1}/${rss.length} done, `, order);
           }
         }
-        window.console.log(rets);
+        // window.console.log(rets);
         filedownload(opts, rets, ['구분','주문번호','주문시각','점포명','상품명','옵션','수량','단가','할인','주문총액'])
         return rets;
       },
@@ -152,9 +152,11 @@
                         ];
                         row.push(order_row.concat([item.name,'',item.quantity,item.unitSalePrice,0,order.salePrice]));
                         if(item.itemOptions && 0<item.itemOptions.length) {
-                          item.itemOptions.forEach((opt)=>{
-                            row.push(order_row.concat([item.name,opt.optionName,opt.optionQuantity,opt.optionPrice,0,order.salePrice]));
-                          });
+                          item.itemOptions
+                            .filter((opt)=>opt.optionsName.replace(/\s/g, '')!='변경안함')
+                            .forEach((opt)=>{
+                              row.push(order_row.concat([item.name,opt.optionName,opt.optionQuantity,opt.optionPrice,0,order.salePrice]));
+                            });
                         }
                       })
                       return row;
@@ -164,7 +166,7 @@
               rets = rets.concat(rs);
           }
 
-          window.console.log(rets);
+          // window.console.log(rets);
           filedownload(opts, rets, ['구분','주문번호','주문시각','점포명','상품명','옵션','수량','단가','할인','주문총액'])
           return rets;
       },
