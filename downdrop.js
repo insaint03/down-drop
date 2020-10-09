@@ -153,7 +153,7 @@
                         row.push(order_row.concat([item.name,'',item.quantity,item.unitSalePrice,0,order.salePrice]));
                         if(item.itemOptions && 0<item.itemOptions.length) {
                           item.itemOptions
-                            .filter((opt)=>opt.optionsName.replace(/\s/g, '')!='변경안함')
+                            .filter((opt)=>opt.optionName && opt.optionName.replace(/\s/g, '')!='변경안함')
                             .forEach((opt)=>{
                               row.push(order_row.concat([item.name,opt.optionName,opt.optionQuantity,opt.optionPrice,0,order.salePrice]));
                             });
