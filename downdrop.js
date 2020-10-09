@@ -74,7 +74,7 @@
               order.shop.name,
             ];
             rets.push(order_info.concat([item.name, '', item.quantity, item.price, item.discount, order.orderAmount]));
-            let opts = item.options.filter((opt)=>opt.group=='가격');
+            let opts = item.options.filter((opt)=>opt.group!='가격');
             if(opts && 0<opts.length) {
               opts.forEach((opt)=>{
                 opt.items.forEach((o)=>{
