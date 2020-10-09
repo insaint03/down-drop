@@ -78,7 +78,7 @@
             if(opts && 0<opts.length) {
               opts.forEach((opt)=>{
                 opt.items.forEach((o)=>{
-                  rets.push(order_info.concat([opt.group, o.name, o.quantity, o.price, o.discount, order.orderAmount]));
+                  rets.push(order_info.concat([item.name, o.name, o.quantity, o.price, o.discount, order.orderAmount]));
                 })
               });
             }
@@ -89,7 +89,7 @@
           }
         }
         window.console.log(rets);
-        filedownload(opts, rets, ['구분','주문번호','주문시각','점포명','상품명','옵션구분','수량','단가','할인','주문총액'])
+        filedownload(opts, rets, ['구분','주문번호','주문시각','점포명','상품명','옵션','수량','단가','할인','주문총액'])
         return rets;
       },
 
@@ -153,7 +153,7 @@
                         row.push(order_row.concat([item.name,'',item.quantity,item.unitSalePrice,0,order.salePrice]));
                         if(item.itemOptions && 0<item.itemOptions.length) {
                           item.itemOptions.forEach((opt)=>{
-                            row.push(order_row.concat([opt.optionName,'OPTION',opt.optionQuantity,opt.optionPrice,0,order.salePrice]));
+                            row.push(order_row.concat([item.name,opt.optionName,opt.optionQuantity,opt.optionPrice,0,order.salePrice]));
                           });
                         }
                       })
@@ -165,7 +165,7 @@
           }
 
           window.console.log(rets);
-          filedownload(opts, rets, ['구분','주문번호','주문시각','점포명','상품명','옵션구분','수량','단가','할인','주문총액'])
+          filedownload(opts, rets, ['구분','주문번호','주문시각','점포명','상품명','옵션','수량','단가','할인','주문총액'])
           return rets;
       },
 
