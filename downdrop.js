@@ -36,8 +36,10 @@
             limit: 50,
         };
 
-        let ts_cursor = new Date(opts.start_date).getTime()-1;
-        let ts_threshold = new Date(opts.end_date).getTime();
+        let tz_offset = 9*3600*1e3; // GMT + 0900hrs
+
+        let ts_cursor = new Date(opts.start_date).getTime()-1 +tz_offset;
+        let ts_threshold = new Date(opts.end_date).getTime() +tz_offset;
         let rss = [];
         let rs = [];
 
